@@ -293,7 +293,7 @@ siteler_havuzu = [
         "strategy": "native",
         "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html&searchTerm={query}",
         "default_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html",
-        "kategoriler["Akademik Modelleme", "Açık Simülasyon"],
+        "kategoriler["Akademik Modelleme", "Açık Simülasyon"]
         "kaynak": "Colorado University"
     }
 ]
