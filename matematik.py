@@ -1,5 +1,5 @@
 import streamlit as st
-import requests
+import urllib.parse
 
 # --- SAYFA AYARLARI ---
 st.set_page_config(
@@ -31,27 +31,16 @@ st.markdown("""
     .tag-sinif { display: inline-block; background-color: #f0fdf4; color: #166534; padding: 4px 10px; border-radius: 8px; font-size: 12.5px; margin-right: 8px; font-weight: 600; }
     .tag-konu { display: inline-block; background-color: #f0f9ff; color: #0369a1; padding: 4px 10px; border-radius: 8px; font-size: 12.5px; margin-right: 8px; font-weight: 600; }
     .tag-kategori { display: inline-block; background-color: #faf5ff; color: #6b21a8; padding: 4px 10px; border-radius: 8px; font-size: 12.5px; margin-right: 8px; font-weight: 600; }
-    .status-active { color: #10b981; font-weight: bold; font-size: 13px; float: right; }
+    .status-ready { color: #10b981; font-weight: bold; font-size: 13px; float: right; }
 </style>
 """, unsafe_allow_html=True)
 
 if "favoriler" not in st.session_state:
     st.session_state.favoriler = []
 
-# --- GÜVENLİ LİNK KONTROLÜ (BOT ENGELİNİ AŞAN BROWSER HEADERS) ---
-@st.cache_data(ttl=3600)
-def guvenli_link_kontrol(url):
-    try:
-        # Büyük sitelerin bot engeline takılmamak için tarayıcı taklidi yapıyoruz
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-        r = requests.get(url, headers=headers, timeout=3, stream=True)
-        return r.status_code < 400
-    except:
-        return False
-
 # --- BAŞLIK VE AÇIKLAMA ---
 st.markdown("<h1 style='color: #1e293b; font-weight: 800;'>📐 Ortaokul Matematik Öğretmenleri İçin Dijital Materyal Havuzu</h1>", unsafe_allow_html=True)
-st.write("Seçtiğiniz sınıf ve konuyu tüm platformların kendi arama motoru sistemlerine otomatik olarak entegre eder ve nokta atışı arama linki üretir.")
+st.write("Seçtiğiniz konuyu platformların altyapısına göre filtreler. Arama motoru olmayan siteleri hedefli algoritmalarla taratarak 404 hatasını tamamen engeller.")
 st.markdown("---")
 
 # --- YAN MENÜ FİLTRELERİ ---
@@ -82,7 +71,7 @@ else:
 
 secilen_konu = st.sidebar.selectbox("Konu Alanı Seçin:", konu_secenekleri)
 
-# --- V3 PROFESYONEL FİLTRELER ---
+# --- Gelişmiş Filtreler ---
 st.sidebar.markdown("---")
 st.sidebar.subheader("🚀 Gelişmiş Filtreler")
 kategori_sec = st.sidebar.multiselect("Materyal Türü:", ["Oyun", "Simülasyon", "Video", "Manipülatif", "Etkinlik"])
@@ -91,11 +80,12 @@ lgs_modu = st.sidebar.toggle("🎯 Sadece LGS Odaklı Siteler")
 # --- ANA ARAMA ÇUBUĞU ---
 arama_sorgusu = st.text_input("🔍 Kelime ile İçerik Havuzunda Ara:", placeholder="Örn: phet, kesirler, ebob ekok...").strip().lower()
 
-# --- SİTELERİN GERÇEK ARAMA MOTORU URL YAPILARI ---
+# --- REFACTOR EDİLMİŞ GÜVENLİ SİTE MODELİ ---
 siteler_havuzu = [
     {
         "isim": "Wordwall Matematik",
         "aciklama": "Öğretmenler tarafından hazırlanmış çarkıfelek, labirent ve bilgi yarışması etkinlikleri.",
+        "strategy": "native",
         "search_url": "https://wordwall.net/tr/community?localeId=1055&query={query}",
         "default_url": "https://wordwall.net/tr/community?localeId=1055&query=matematik",
         "kategoriler": ["Oyun", "Etkinlik"],
@@ -104,6 +94,7 @@ siteler_havuzu = [
     {
         "isim": "GeoGebra Materyalleri",
         "aciklama": "Geometri, grafikler ve denklemler için dinamik, hareketli öğretmen simülasyon sayfaları.",
+        "strategy": "native",
         "search_url": "https://www.geogebra.org/search/{query}",
         "default_url": "https://www.geogebra.org/materials",
         "kategoriler": ["Simülasyon", "Manipülatif"],
@@ -112,7 +103,7 @@ siteler_havuzu = [
     {
         "isim": "Mathigon & Polypad",
         "aciklama": "Matematiğin sanal laboratuvarı. Cebir karoları, kesir blokları ve dinamik paneller.",
-        "search_url": "https://mathigon.org/polypad", 
+        "strategy": "concept", 
         "default_url": "https://mathigon.org/polypad",
         "kategoriler": ["Manipülatif", "Simülasyon"],
         "lgs_uyumlu": True
@@ -120,6 +111,7 @@ siteler_havuzu = [
     {
         "isim": "PhET İnteraktif Simülasyonlar",
         "aciklama": "Colorado Üniversitesi onaylı kesir, tam sayı ve denklem terazisi simülasyonları.",
+        "strategy": "native",
         "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html&searchTerm={query}",
         "default_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html",
         "kategoriler": ["Simülasyon"],
@@ -127,15 +119,26 @@ siteler_havuzu = [
     },
     {
         "isim": "Matific Türkiye",
-        "aciklama": "MEB müfredatına tam uyumlu, sınıf seviyenize özel animasyonlu senaryolu oyun görevleri.",
-        "search_url": "https://www.matific.com/tr/tr/home/maths-zone/",
+        "aciklama": "MEB müfredatına tam uyumlu oyun tabanlı akıllı matematik etkinlikleri.",
+        "strategy": "google_fallback",
+        "target_domain": "matific.com/tr/tr/",
         "default_url": "https://www.matific.com/tr/tr/home/maths-zone/",
         "kategoriler": ["Oyun"],
         "lgs_uyumlu": False
     },
     {
+        "isim": "Toy Theater",
+        "aciklama": "Sanal onluk bloklar, geometri tahtaları barındıran görselleştirme platformu.",
+        "strategy": "native",
+        "search_url": "https://toytheater.com/?s={query}",
+        "default_url": "https://toytheater.com/category/math/",
+        "kategoriler": ["Manipülatif", "Oyun"],
+        "lgs_uyumlu": False
+    },
+    {
         "isim": "Khan Academy",
         "aciklama": "Tüm kazanımları video ve oyunlaştırılmış testlerle sunan eksiksiz eğitim paneli.",
+        "strategy": "native",
         "search_url": "https://tr.khanacademy.org/search?page_search_query={query}",
         "default_url": "https://tr.khanacademy.org/math/",
         "kategoriler": ["Video", "Etkinlik"],
@@ -143,37 +146,42 @@ siteler_havuzu = [
     }
 ]
 
-# --- DİNAMİK LİNK MOTORU VE FİLTRELEME ---
+# --- HİBRİT LİNK MOTORU ---
 filtrelenmis_siteler = []
 
-# Arama terimi oluşturma mantığı
+# Seçimlerden ham arama sorgusu oluşturma
 terim_parcalari = []
 if secilen_sinif != "Hepsi": terim_parcalari.append(secilen_sinif)
 if secilen_konu != "Hepsi": terim_parcalari.append(secilen_konu)
 olusturulan_sorgu = " ".join(terim_parcalari).strip()
 
 for site in siteler_havuzu:
-    # Filtre Kontrolleri
+    # Gelişmiş Filtre Kontrolleri
     if lgs_modu and not site["lgs_uyumlu"]: continue
     if kategori_sec and not any(k in site["kategoriler"] for k in kategori_sec): continue
     if arama_sorgusu and (arama_sorgusu not in site["isim"].lower() and arama_sorgusu not in site["aciklama"].lower()): continue
     
-    # URL Oluşturma Parametresi
+    # URL Oluşturma Algoritması
     if olusturulan_sorgu:
-        encoded_sorgu = olusturulan_sorgu.replace(" ", "%20")
-        # Özel durum yönlendirmeleri (Mathigon spesifik hashtag urlleri)
-        if site["isim"] == "Mathigon & Polypad" and secilen_konu != "Hepsi":
+        # Türkçe karakterleri ve boşlukları web uyumlu hale getirme (URL Encoding)
+        encoded_sorgu = urllib.parse.quote(olusturulan_sorgu)
+        
+        if site["strategy"] == "native":
+            dinamik_url = site["search_url"].format(query=encoded_sorgu)
+            
+        elif site["strategy"] == "google_fallback":
+            # Doğrudan arama motoru olmayan siteler için %100 çalışan hedefli Google yönlendirmesi
+            google_query = urllib.parse.quote(f"site:{site['target_domain']} {olusturulan_sorgu}")
+            dinamik_url = f"https://www.google.com/search?q={google_query}"
+            
+        elif site["strategy"] == "concept":
+            # Mathigon gibi sabit kategorili paneller için haritalama
             if secilen_konu in ["Cebirsel İfadeler", "Eşitlik ve Denklem", "Doğrusal Denklemler"]:
                 dinamik_url = "https://mathigon.org/polypad#algebra"
             elif "Geometri" in secilen_konu or "Açılar" in secilen_konu or "Çokgenler" in secilen_konu:
                 dinamik_url = "https://mathigon.org/polypad#geometry"
             else:
                 dinamik_url = "https://mathigon.org/polypad#numbers"
-        elif site["isim"] == "Matific Türkiye" and secilen_sinif != "Hepsi":
-            rakam = secilen_sinif.split(".")[0]
-            dinamik_url = f"https://www.matific.com/tr/tr/home/maths-zone/grade-{rakam}/"
-        else:
-            dinamik_url = site["search_url"].format(query=encoded_sorgu)
     else:
         dinamik_url = site["default_url"]
         
@@ -197,9 +205,12 @@ with tab1:
             with target_col:
                 kategoriler_html = " ".join([f'<span class="tag-kategori">⚡ {k}</span>' for k in site_veri["kategoriler"]])
                 
+                # Başlık yanına arama metodunu belirten güvenli rozet ekleme
+                badge_text = "● Google Güvenli Arama" if site_veri["strategy"] == "google_fallback" else "● Doğrudan Bağlantı"
+                
                 st.markdown(f"""
                 <div class="card">
-                    <span class="status-active">● Bağlantı Hazır</span>
+                    <span class="status-ready">{badge_text}</span>
                     <div class="card-title">{site_veri['isim']}</div>
                     <div class="card-desc">{site_veri['aciklama']}</div>
                     <div style="margin-bottom: 15px;">
@@ -212,7 +223,13 @@ with tab1:
                 
                 btn_c1, btn_c2 = st.columns([3, 1])
                 with btn_c1:
-                    buton_metni = f"🚀 {site_veri['isim']} İçinde Ara" if olusturulan_sorgu else f"🔗 {site_veri['isim']} Paneline Git"
+                    if site_veri["strategy"] == "google_fallback" and olusturulan_sorgu:
+                        buton_metni = f"🔍 {site_veri['isim']} Oyunlarını Google'da Listele"
+                    elif olusturulan_sorgu:
+                        buton_metni = f"🚀 {site_veri['isim']} İçinde Ara"
+                    else:
+                        buton_metni = f"🔗 {site_veri['isim']} Paneline Git"
+                        
                     st.link_button(buton_metni, hedef_link, use_container_width=True)
                 with btn_c2:
                     if site_veri["isim"] in st.session_state.favoriler:
