@@ -1,93 +1,93 @@
 import streamlit as st
 import urllib.parse
 
-# --- ULTRA MODERN SAYFA AYARLARI ---
+# --- ULTRA MODERN PREMIUM SAYFA AYARLARI ---
 st.set_page_config(
-    page_title="Matematik Materyal Motoru v4.0",
+    page_title="Matematik Materyal Motoru Pro v5.0",
     page_icon="📐",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# --- NEON & SLATE PREMIUM APPERANCE (CSS DESIGN) ---
+# --- LUXURY EXECUTIVE DASHBOARD DESIGN (CSS MASTERBLOCK) ---
 st.markdown("""
 <style>
-    /* Ana Arka Plan ve Font Ailesi */
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
     
+    /* Global Alan Düzenlemesi */
     html, body, [data-testid="stAppViewContainer"] {
-        background-color: #f3f4f6;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f8fafc;
+        font-family: 'Outfit', sans-serif;
     }
     
-    /* Yan Menü Tasarımı */
+    /* Yan Menü Premium Revizyonu */
     [data-testid="stSidebar"] {
         background-color: #ffffff !important;
-        border-right: 1px solid #e5e7eb;
+        border-right: 1px solid #e2e8f0;
     }
     
     /* Üst Sekme Çubuğu Modernizasyonu */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 12px;
-        border-bottom: 2px solid #e5e7eb;
-        padding-bottom: 8px;
+        gap: 16px;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 10px;
     }
     .stTabs [data-baseweb="tab"] {
         background-color: #ffffff;
-        border: 1px solid #e5e7eb !important;
-        padding: 10px 24px;
-        border-radius: 12px;
+        border: 1px solid #e2e8f0 !important;
+        padding: 12px 28px;
+        border-radius: 16px;
         font-weight: 600;
-        color: #4b5563;
+        color: #64748b;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .stTabs [aria-selected="true"] {
-        background-color: #0f172a !important;
+        background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%) !important;
         color: #ffffff !important;
-        border-color: #0f172a !important;
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        border-color: transparent !important;
+        box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
     }
 
-    /* ULTRA MODERN KUTUCUK (CARD) MİMARİSİ */
-    .modern-card {
+    /* ULTRA MODERN GLOW-CARD MİMARİSİ */
+    .premium-card {
         background: #ffffff;
-        border-radius: 24px;
-        padding: 28px;
+        border-radius: 28px;
+        padding: 30px;
         margin-bottom: 24px;
-        border: 1px solid rgba(229, 231, 235, 0.9);
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.03);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
     }
     
-    /* Kutuya Fare ile Gelindiğinde Canlanma Efekti */
-    .modern-card:hover {
-        transform: translateY(-5px) scale(1.01);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
-        border-color: #6366f1;
+    /* Kart Üzerine Gelindiğinde Neon Işıltı ve Yükselme Efekti */
+    .premium-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
+        border-color: #4f46e5;
     }
     
-    /* Sol Kenardaki Renkli Çizgi Detayı */
-    .modern-card::before {
+    /* Sol Dikey Akıllı Gradyan Şeridi */
+    .premium-card::before {
         content: '';
         position: absolute;
         top: 0; left: 0; width: 6px; height: 100%;
-        background: linear-gradient(180deg, #6366f1 0%, #3b82f6 100%);
+        background: linear-gradient(180deg, #4f46e5 0%, #3b82f6 100%);
     }
 
     .card-title {
-        color: #1f2937;
-        font-size: 22px;
-        font-weight: 800;
+        color: #0f172a;
+        font-size: 23px;
+        font-weight: 700;
         letter-spacing: -0.5px;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
     }
     .card-desc {
-        color: #6b7280;
-        font-size: 14.5px;
+        color: #475569;
+        font-size: 15px;
         line-height: 1.6;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
     }
 
     /* Kapsül Rozetler (Minimalist Pill Badges) */
@@ -101,10 +101,10 @@ st.markdown("""
         margin-right: 8px;
         margin-bottom: 8px;
     }
-    .badge-sinif { background-color: #f3f4f6; color: #1f2937; border: 1px solid #e5e7eb; }
-    .badge-konu { background-color: #eff6ff; color: #1d4ed8; }
+    .badge-sinif { background-color: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+    .badge-konu { background-color: #e0f2fe; color: #0369a1; }
     .badge-tip { background-color: #f5f3ff; color: #6d28d9; }
-    .badge-origin { background-color: #fff7ed; color: #c2410c; }
+    .badge-origin { background-color: #fef3c7; color: #b45309; }
     
     .status-indicator {
         float: right;
@@ -112,38 +112,34 @@ st.markdown("""
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        background-color: #f0fdf4;
-        color: #166534;
-        padding: 6px 12px;
-        border-radius: 10px;
+        background-color: #ecfdf5;
+        color: #065f46;
+        padding: 6px 14px;
+        border-radius: 12px;
     }
 
-    /* Metrik Panelleri */
+    /* Üst Gelişmiş Metrik Panelleri */
     .metric-box {
         background: #ffffff;
-        padding: 20px;
-        border-radius: 20px;
-        border: 1px solid #e5e7eb;
+        padding: 24px;
+        border-radius: 24px;
+        border: 1px solid #e2e8f0;
         text-align: center;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.01);
     }
 </style>
 """, unsafe_allow_html=True)
 
-# --- SESSION STATE ---
-if "favoriler" not in st.session_state:
-    st.session_state.favoriler = []
-
 # --- BAŞLIK ALANI (HEADER) ---
-st.markdown("<h1 style='color: #111827; font-weight: 900; font-size: 38px; letter-spacing: -1px; margin-bottom:4px;'>📊 Ortaokul Matematik Dijital İstasyon Hub</h1>", unsafe_allow_html=True)
-st.markdown("<p style='color: #4b5563; font-size: 16px; margin-top:0px;'>Sınıf içi akışın kesilmemesi için tasarlanmış, 404 korumalı ultra modern materyal ağ haritası.</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: #0f172a; font-weight: 800; font-size: 40px; letter-spacing: -1px; margin-bottom:4px;'>📐 Ortaokul Matematik Dijital Entegrasyon Paneli</h1>", unsafe_allow_html=True)
+st.markdown("<p style='color: #475569; font-size: 16px; margin-top:0px;'>Müfredat kazanımları ile tam senkronize çalışan, çok dilli arama optimizasyonlu kurumsal yönetim platformu.</p>", unsafe_allow_html=True)
 st.write("")
 
 # --- SIDEBAR CONTROL PANEL ---
-st.sidebar.markdown("<h2 style='color: #111827; font-size: 22px; font-weight: 800; margin-bottom: 15px;'>🎛️ Filtre İstasyonu</h2>", unsafe_allow_html=True)
+st.sidebar.markdown("<h2 style='color: #0f172a; font-size: 22px; font-weight: 700; margin-bottom: 15px;'>🎛️ Parametre İstasyonu</h2>", unsafe_allow_html=True)
 
 sinif_secenekleri = ["Hepsi", "5. Sınıf", "6. Sınıf", "7. Sınıf", "8. Sınıf"]
-secilen_sinif = st.sidebar.selectbox("Kademe Seviyesi:", sinif_secenekleri)
+secilen_sinif = st.sidebar.selectbox("Eğitim Kademesi:", sinif_secenekleri)
 
 tum_meb_konulari = [
     "Hepsi", "Doğal Sayılar", "Doğal Sayılarla İşlemler", "Çarpanlar ve Katlar", "Kümeler", "Tam Sayılar",
@@ -166,15 +162,15 @@ else:
     konu_secenekleri = tum_meb_konulari
 
 secilen_konu = st.sidebar.selectbox("Müfredat Ünitesi:", konu_secenekleri)
-ozel_kazanim_sorgu = st.sidebar.text_input("🔍 Kod veya Özel Anahtar Kelime:", placeholder="Örn: M.7.1.1.3 veya yaprak test...").strip()
+ozel_kazanim_sorgu = st.sidebar.text_input("🔍 Odaklanılacak Kazanım Terimi:", placeholder="Örn: M.8.1.2.1 veya Özdeşlikler...").strip()
 
-# --- BACKEND DİL VE ARAMA RECOVERY HARİTASI ---
+# --- KURUMSAL SÖZLÜK VE ÇOK DİLLİ UYUMLULUK KATMANI ---
 ingilizce_konu_haritasi = {
     "Kesirler": "fraction", "Kesirlerle İşlemler": "fraction", "Oran ve Orantı": "ratio",
     "Ondalık Gösterim": "decimal", "Yüzdeler": "percent", "Tam Sayılar": "integer",
     "Cebirsel İfadeler": "algebra", "Eşitlik ve Denklem": "equation", "Doğrusal Denklemler": "graph",
     "Çarpanlar ve Katlar": "prime", "Üslü İfadeler": "exponent", "Kareköklü İfadeler": "root",
-    "Temel Geometrik Kavramlar": "geometry", "Doğrular ve Açılar": "angles", "Çokgenler": "polygon",
+    "Temel Geometrik Kavramlar": "geometry", "Doğrular ve Açılar", "Çokgenler": "polygon",
     "Üçgenler": "triangle", "Çember ve Daire": "circle", "Olasılık": "probability",
     "Veri Toplama ve Analizi": "graph", "Koordinat Sistemi": "grid", "Geometrik Cisimler": "3d"
 }
@@ -190,88 +186,115 @@ if secilen_sinif != "Hepsi": full_sorgu_listesi.append(secilen_sinif)
 if saf_konu: full_sorgu_listesi.append(saf_konu)
 global_mufredat_string = " ".join(full_sorgu_listesi).strip()
 
-# --- MASTER VERİ REPO ---
+# --- MASTER VERİ REPO (GENİŞLETİLMİŞ EKSİKSİZ HAVUZ) ---
 siteler_havuzu = [
     {
         "isim": "Wordwall Topluluk Kitaplığı",
-        "aciklama": "Binlerce matematik öğretmeni tarafından test edilmiş, MEB ünitelerine tam uyumlu çarkıfelek, kutu açma ve labirent yarışmaları.",
+        "aciklama": "Geniş öğretmen ekosistemi tarafından yapılandırılmış, müfredat üniteleriyle uyumlu interaktif matematik oyunları ve yarışma modülleri.",
         "strategy": "native",
         "search_url": "https://wordwall.net/tr/community?localeId=1055&query={query}",
         "default_url": "https://wordwall.net/tr/community?localeId=1055&query=matematik",
-        "kategoriler": ["Oyun", "İnteraktif Etkinlik"],
-        "kaynak": "Küresel Topluluk"
+        "kategoriler": ["Dijital Oyun", "İnteraktif Uygulama"],
+        "kaynak": "Küresel Konsorsiyum"
     },
     {
         "isim": "Matematikçiler.com Portal",
-        "aciklama": "Ortaokul matematik müfredatının kalbi. Tamamen yeni nesil ve kazanım testleri, PDF yaprak testler, denemeler ve çalışma föyleri.",
+        "aciklama": "Ortaokul düzeyine özgü optimize edilmiş yeni nesil tarama testleri, basılı döküman yaprakları ve konu analiz özetleri.",
         "strategy": "native",
         "search_url": "https://www.matematikciler.com/?s={query}",
         "default_url": "https://www.matematikciler.com/ortaokul-matematik/",
         "kategoriler": ["Kazanım Testi", "Döküman / PDF"],
-        "kaynak": "Yerel / Profesyonel"
+        "kaynak": "Yerel Akademik Portal"
+    },
+    {
+        "isim": "Derslig Matematik Odası",
+        "aciklama": "Ortaokul seviyesinde interaktif ünite görevleri, animasyonlu konu anlatımları ve dijital ölçme araçları barındıran yeni nesil sistem.",
+        "strategy": "google_search",
+        "target_string": "site:derslig.com matematik {query}",
+        "default_url": "https://www.derslig.com",
+        "kategoriler": ["İnteraktif Görev", "Ölçme / Değerlendirme"],
+        "kaynak": "Yerel Dijital Platform"
+    },
+    {
+        "isim": "Liveworksheets Matematik",
+        "aciklama": "Dünya çapındaki eğitimciler tarafından dijitalleştirilmiş, öğrencilerin anlık dönüt alabildiği etkileşimli çalışma yaprakları.",
+        "strategy": "native",
+        "search_url": "https://www.liveworksheets.com/search?query=matematik+{query}",
+        "default_url": "https://www.liveworksheets.com",
+        "kategoriler": ["Etkileşimli Yaprak", "Çevrimiçi Görev"],
+        "kaynak": "Küresel / Çok Dilli"
     },
     {
         "isim": "Toy Theater Labs",
-        "aciklama": "Soyut kavramları harika biçimde somutlaştıran, kesir terazileri, geometri tahtaları barındıran dijital manipülatif kütüphanesi.",
+        "aciklama": "Soyut matematik kuramlarının somut parametrelerle modellenmesini sağlayan sanal manipülatif ve görselleştirme kütüphanesi.",
         "strategy": "english_translated",
         "search_url": "https://toytheater.com/?s={query}",
         "default_url": "https://toytheater.com/category/math/",
-        "kategoriler": ["Sanal Manipülatif", "Oyun"],
-        "kaynak": "Küresel / Entegre Çeviri"
+        "kategoriler": ["Sanal Manipülatif", "Görsel Modelleme"],
+        "kaynak": "Çok Dilli Entegrasyon"
     },
     {
         "isim": "EBA (Eğitim Bilişim Ağı)",
-        "aciklama": "Milli Eğitim Bakanlığı'nın resmi ders videoları, etkileşimli tahta uygulamaları ve ünite sonu değerlendirme modülleri.",
+        "aciklama": "Milli Eğitim Bakanlığı'nın resmi uzaktan eğitim altyapısı, video ders anlatımları ve bakanlık onaylı akıllı tahta içerikleri.",
         "strategy": "native",
         "search_url": "https://www.eba.gov.tr/arama?q={query}",
         "default_url": "https://www.eba.gov.tr",
-        "kategoriler": ["Bakanlık Videosu", "Resmi Etkinlik"],
-        "kaynak": "EBA / MEB Resmi"
+        "kategoriler": ["Resmi Video", "Bakanlık Modülü"],
+        "kaynak": "MEB Devlet Arşivi"
     },
     {
-        "isim": "Eğitimhane Havuzu",
-        "aciklama": "Geniş öğretmen zümre ağı tarafından yüklenen matematik yazılı soru kağıtları, çalışma kağıtları ve tarama testleri.",
+        "isim": "Eğitimhane Veri Havuzu",
+        "aciklama": "Matematik eğitim toplulukları tarafından paylaşılan dönemlik yazılı sınav örnekleri, tarama formları ve zümre dökümanları.",
         "strategy": "google_search",
         "target_string": "site:egitimhane.com matematik {query}",
         "default_url": "https://www.egitimhane.com",
-        "kategoriler": ["Yazılı Hazırlık", "Çalışma Yaprağı"],
-        "kaynak": "Öğretmen Paylaşımı"
+        "kategoriler": ["Yazılı Örneği", "Çalışma Föyü"],
+        "kaynak": "Öğretmen Paylaşım Ağı"
     },
     {
         "isim": "GeoGebra Simülasyon Dünyası",
-        "aciklama": "Özellikle geometri, açılar, çokgenler ve grafik çizimleri için dinamik, parametreleri değişebilir muazzam matematik laboratuvarı.",
+        "aciklama": "Geometri, analitik düzlem, açılar ve fonksiyon grafiklerinin interaktif olarak incelenebildiği dinamik geometri motoru.",
         "strategy": "native",
         "search_url": "https://www.geogebra.org/search/{query}",
         "default_url": "https://www.geogebra.org/materials",
-        "kategoriler": ["Laboratuvar", "Grafik / Geometri"],
-        "kaynak": "Küresel / Akademik"
+        "kategoriler": ["Dinamik Geometri", "Analitik Laboratuvar"],
+        "kaynak": "Küresel Akademik Enstitü"
     },
     {
         "isim": "Matific Türkiye Odası",
-        "aciklama": "Oyunlaştırma tekniğiyle kurgulanmış, öğrencilerin sıkılmadan matematik senaryolarını çözdüğü akıllı yapay zeka destekli sistem.",
+        "aciklama": "Pedagojik esaslara dayalı olarak kurgulanmış oyunlaştırılmış matematik problemleri ve akıllı öğrenme adımları.",
         "strategy": "google_search",
         "target_string": "matific türkiye {query}",
         "default_url": "https://www.matific.com/tr/tr/home/maths-zone/",
-        "kategoriler": ["Pedagojik Oyun"],
-        "kaynak": "Küresel / Premium"
+        "kategoriler": ["Pedagojik Oyun", "Akıllı Senaryo"],
+        "kaynak": "Uluslararası Premium"
     },
     {
-        "isim": "MEB ÖDS Güvenli Erişim",
-        "aciklama": "Ölçme Değerlendirme ve Sınav Hizmetleri Genel Müdürlüğü'nün en güncel LGS deneme ve test dökümanları arama kanalı.",
+        "isim": "MEB ÖDS Seçici Havuz",
+        "aciklama": "Ölçme Değerlendirme ve Sınav Hizmetleri Genel Müdürlüğü tarafından yayımlanan LGS odaklı resmi deneme ve kazanım testleri.",
         "strategy": "google_search",
         "target_string": "meb ods eba matematik {query}",
         "default_url": "https://ods.eba.gov.tr",
-        "kategoriler": ["LGS Hazırlık", "Kazanım Testi"],
-        "kaynak": "MEB Sınav Hizmetleri"
+        "kategoriler": ["LGS Seçki Testi", "Resmi Soru Havuzu"],
+        "kaynak": "ÖDS Genel Müdürlüğü"
+    },
+    {
+        "isim": "Sorubak Kaynak Havuzu",
+        "aciklama": "Ortaokul müfredat dönemlerine tam uyumlu matematik merkezi sınav hazırlık dokümanları ve öğretmen yaprak test arşivi.",
+        "strategy": "google_search",
+        "target_string": "site:sorubak.com ortaokul matematik {query}",
+        "default_url": "https://www.sorubak.com",
+        "kategoriler": ["Tarama Testi", "Sınav Hazırlık"],
+        "kaynak": "Eğitim Paylaşım Deposu"
     },
     {
         "isim": "PhET Matematik Laboratuvarı",
-        "aciklama": "Colorado Üniversitesi onaylı, denklemleri terazi mantığıyla çözen, tam sayıları ve kesirleri görselleştiren açık kaynak simülasyonlar.",
+        "aciklama": "Üniversite düzeyinde geliştirilmiş, denklemleri ve rasyonel sayı sistemlerini interaktif simülasyonlarla sunan açık kaynaklı yapı.",
         "strategy": "native",
         "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html&searchTerm={query}",
         "default_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html",
-        "kategoriler": ["Akademik Simülasyon"],
-        "kaynak": "Colorado Üniv."
+        "kategoriler["Akademik Modelleme", "Açık Simülasyon"],
+        "kaynak": "Colorado University"
     }
 ]
 
@@ -297,17 +320,17 @@ for site in siteler_havuzu:
     filtrelenmis_siteler.append({"veri": site, "url": link})
 
 # --- SEKMELİ ULTRA MODERN GÖRÜNÜM PANAROMASI ---
-tab1, tab2 = st.tabs(["🚀 Canlı Entegre Kanallar", "📈 Müfredat Kontrol Matrisi"])
+tab1, tab2 = st.tabs(["🚀 Aktif Eğitim Kanalları Matrisi", "📊 Kurumsal Entegrasyon Şeması"])
 
 with tab1:
     # Üst Bilgi Metrik Konteynerleri
     c_1, c_2, c_3 = st.columns(3)
     with c_1:
-        st.markdown(f'<div class="metric-box"><p style="margin:0;color:#6b7280;font-weight:600;font-size:13px;">HEDEFLENEN FİLTRE</p><h4 style="margin:4px 0 0 0;color:#111827;font-weight:800;font-size:16px;">{global_mufredat_string if global_mufredat_string else "Genel Müfredat Havuzu Açık"}</h4></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="metric-box"><p style="margin:0;color:#64748b;font-weight:600;font-size:13px;letter-spacing:0.5px;">HEDEFLENEN MÜFREDAT GRUBU</p><h4 style="margin:6px 0 0 0;color:#0f172a;font-weight:700;font-size:16px;">{global_mufredat_string if global_mufredat_string else "Tüm Akademik Havuz Aktif"}</h4></div>', unsafe_allow_html=True)
     with c_2:
-        st.markdown(f'<div class="metric-box"><p style="margin:0;color:#6b7280;font-weight:600;font-size:13px;">DİJİTAL SİSTEM KANALI</p><h4 style="margin:4px 0 0 0;color:#6366f1;font-weight:800;font-size:16px;">{len(filtrelenmis_siteler)} Aktif Entegrasyon</h4></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="metric-box"><p style="margin:0;color:#64748b;font-weight:600;font-size:13px;letter-spacing:0.5px;">EŞ ZAMANLI ENTEGRE SİSTEM</p><h4 style="margin:6px 0 0 0;color:#4f46e5;font-weight:700;font-size:16px;">{len(filtrelenmis_siteler)} Aktif Veri Kanalı</h4></div>', unsafe_allow_html=True)
     with c_3:
-        st.markdown(f'<div class="metric-box"><p style="margin:0;color:#6b7280;font-weight:600;font-size:13px;">GÜVENLİK PROTOKOLÜ</p><h4 style="margin:4px 0 0 0;color:#166534;font-weight:800;font-size:16px;">%100 Canlı Arama Garantisi</h4></div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="metric-box"><p style="margin:0;color:#64748b;font-weight:600;font-size:13px;letter-spacing:0.5px;">VERİ GÜVENLİK VE AKTARIM</p><h4 style="margin:6px 0 0 0;color:#059669;font-weight:700;font-size:16px;">Eş Zamanlı İndeksleme Aktif</h4></div>', unsafe_allow_html=True)
 
     st.write("")
     st.write("")
@@ -319,52 +342,52 @@ with tab1:
         data = item["veri"]
         target_link = item["url"]
         
-        # Kartların sağa ve sola dengeli dağıtılması
         current_col = col_left if index % 2 == 0 else col_right
         
         with current_col:
-            # Strateji tipine göre dinamik durum rozeti belirleme
             if data["strategy"] == "english_translated":
-                status_lbl = "🌐 EN ÇEVİRİ AKTİF"
+                status_lbl = "🌐 ÇOK DİLLİ OPTİMİZASYON"
             elif data["strategy"] == "google_search":
-                status_lbl = "🔍 GOOGLE BYPASS"
+                status_lbl = "🔍 DIZIN ENDEKSLI"
             else:
-                status_lbl = "⚡ DIREKT ENTEGRE"
+                status_lbl = "⚡ ANLIK ENTEGRASYON"
                 
             categories_badges = " ".join([f'<span class="badge badge-tip">⚙️ {c}</span>' for c in data["kategoriler"]])
             
-            # Ultra Modern Kutucuk HTML Çıktısı
+            # Ultra Modern Tasarımlı Kart Çıktısı
             st.markdown(f"""
-            <div class="modern-card">
+            <div class="premium-card">
                 <span class="status-indicator">{status_lbl}</span>
                 <div class="card-title">{data['isim']}</div>
                 <div class="card-desc">{data['aciklama']}</div>
                 <div>
-                    <span class="badge badge-sinif">📍 {secilen_sinif if secilen_sinif != 'Hepsi' else 'Tüm Sınıflar'}</span>
-                    <span class="badge badge-konu">📖 {secilen_konu if secilen_konu != 'Hepsi' else 'Genel Konular'}</span>
+                    <span class="badge badge-sinif">📍 {secilen_sinif if secilen_sinif != 'Hepsi' else 'Tüm Akademik Kademeler'}</span>
+                    <span class="badge badge-konu">📖 {secilen_konu if secilen_konu != 'Hepsi' else 'Genel Müfredat'}</span>
                     <span class="badge badge-origin">🏢 {data['kaynak']}</span>
                     {categories_badges}
                 </div>
             </div>
             """, unsafe_allow_html=True)
             
-            # Kutunun hemen altına minimalist butonu yerleştiriyoruz
-            btn_label = f"🎯 {data['isim']} Ünitesine Giriş Yap" if global_mufredat_string else f"🔗 {data['isim']} Ana Sayfasını Aç"
+            btn_label = f"🎯 {data['isim']} Ünitesine Güvenli Giriş Yap" if global_mufredat_string else f"🔗 {data['isim']} Kurumsal Sayfasını Aç"
             st.link_button(btn_label, target_link, use_container_width=True)
             st.write("")
 
 with tab2:
-    st.markdown("<h3 style='color: #111827; font-weight:800;'>📌 Sistem Güvenlik Algoritması Notları</h3>", unsafe_allow_html=True)
-    st.info("""
-    - **Google Bypass Sistemi:** Ekran görüntülerinde ilettiğiniz Eğitimhane ve ÖDS gibi sitelerin iç veritabanı çökmeleri, aramayı doğrudan o sitelerin Google dizinlerine yönlendirerek tamamen çözülmüştür.
-    - **Akıllı Çeviri Katmanı:** Toy Theater aramalarında Türkçe karakter veya kelime arandığında oluşan 'Sonuç Bulunamadı' hatası, seçtiğiniz konunun otomatik olarak İngilizce eğitim terimine (`fraction`, `ratio` vb.) dönüştürülmesiyle kalıcı olarak aşılmıştır.
+    st.markdown("<h3 style='color: #0f172a; font-weight:700;'>📊 Platform Veri Senkronizasyonu Altyapı Şeması</h3>", unsafe_allow_html=True)
+    st.markdown("""
+    | Entegrasyon Modeli | Operasyonel Süreç | Veri Akış Metodu |
+    | :--- | :--- | :--- |
+    | **Çok Dilli Veri Optimizasyonu** | Küresel altyapıya sahip harici platformlarda kavramsal eşleşme sağlar. | Otomatik Kavramsal Çeviri Katmanı |
+    | **Dinamik URL Yapılandırması** | İç arama yapısı kapalı devre olan sistemlerde doğrudan ilgili hedef dizine odaklanır. | Eş Zamanlı Google İndeks Yönlendirmesi |
+    | **Anlık Entegrasyon** | Açık veritabanı sunan platformlarda doğrudan eş zamanlı filtreleme gerçekleştirir. | Native Query Parametre Enjeksiyonu |
     """)
 
-# --- YAN MENÜ SIK KULLANILANLAR ---
+# --- SIDEBAR ALT NOT ---
 st.sidebar.markdown("---")
-st.sidebar.markdown("<h4 style='color: #111827; font-weight:700;'>📌 Hızlı Hatırlatma</h4>", unsafe_allow_html=True)
-st.sidebar.caption("Seçtiğiniz sınıf ve ünite kriterleri yukarıdaki tüm dijital kutucukların linklerini dinamik olarak yeniden inşa eder.")
+st.sidebar.markdown("<h4 style='color: #0f172a; font-weight:600;'>📌 Operasyonel Bilgi</h4>", unsafe_allow_html=True)
+st.sidebar.caption("Sistem üzerindeki tüm yönlendirmeler, kurumsal veri optimizasyonu protokollerine uygun olarak dinamik biçimde güncellenmektedir.")
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #9ca3af; font-size: 13px;'>Ortak Payda Matematik Öğretmenleri için geliştirildi. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 13px; letter-spacing: 0.5px;'>Ortak Payda Matematik Öğretmenleri için özel olarak geliştirildi. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
