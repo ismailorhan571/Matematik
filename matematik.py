@@ -3,7 +3,7 @@ import urllib.parse
 
 # --- ULTRA MODERN PREMIUM SAYFA AYARLARI ---
 st.set_page_config(
-    page_title="Matematik Materyal Motoru Pro v5.0",
+    page_title="Matematik Materyal Motoru Pro v5.1",
     page_icon="📐",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -151,7 +151,7 @@ tum_meb_konulari = [
 ]
 
 if secilen_sinif == "5. Sınıf":
-    konu_secenekleri = ["Hepsi", "Doğal Sayılar", "Doğal Sayılarla İşlemler", "Kesirler", "Kesirlerle İşlemler", "Ondalık Gösterim", "Yüzdeler", "Temel Geometrik Kavramlar", "Üçgen ve Dörtgenler", "Veri Toplama ve Analizi", "Uzunluk ve Zaman Ölçme", "Alan Ölçme", "Geometrik Cisimler"]
+    konu_secenekleri = ["Hepsi", "Doğal Sayılar", "Doğal Sayılarla İşlemler", "Kesirler", "Kesirlerle İşlemler", "Ondalık Göspanım", "Yüzdeler", "Temel Geometrik Kavramlar", "Üçgen ve Dörtgenler", "Veri Toplama ve Analizi", "Uzunluk ve Zaman Ölçme", "Alan Ölçme", "Geometrik Cisimler"]
 elif secilen_sinif == "6. Sınıf":
     konu_secenekleri = ["Hepsi", "Doğal Sayılarla İşlemler", "Çarpanlar ve Katlar", "Kümeler", "Tam Sayılar", "Kesirlerle İşlemler", "Ondalık Gösterim", "Oran ve Orantı", "Cebirsel İfadeler", "Veri Toplama ve Analizi", "Doğrular ve Açılar", "Alan Ölçme", "Çember ve Daire", "Geometrik Cisimler", "Sıvı Ölçme"]
 elif secilen_sinif == "7. Sınıf":
@@ -164,13 +164,13 @@ else:
 secilen_konu = st.sidebar.selectbox("Müfredat Ünitesi:", konu_secenekleri)
 ozel_kazanim_sorgu = st.sidebar.text_input("🔍 Odaklanılacak Kazanım Terimi:", placeholder="Örn: M.8.1.2.1 veya Özdeşlikler...").strip()
 
-# --- KURUMSAL SÖZLÜK VE ÇOK DİLLİ UYUMLULUK KATMANI ---
+# --- KURUMSUR SÖZLÜK VE ÇOK DİLLİ UYUMLULUK KATMANI ---
 ingilizce_konu_haritasi = {
     "Kesirler": "fraction", "Kesirlerle İşlemler": "fraction", "Oran ve Orantı": "ratio",
     "Ondalık Gösterim": "decimal", "Yüzdeler": "percent", "Tam Sayılar": "integer",
     "Cebirsel İfadeler": "algebra", "Eşitlik ve Denklem": "equation", "Doğrusal Denklemler": "graph",
     "Çarpanlar ve Katlar": "prime", "Üslü İfadeler": "exponent", "Kareköklü İfadeler": "root",
-    "Temel Geometrik Kavramlar": "geometry", "Doğrular ve Açılar", "Çokgenler": "polygon",
+    "Temel Geometrik Kavramlar": "geometry", "Doğrular ve Açılar": "angles", "Çokgenler": "polygon",
     "Üçgenler": "triangle", "Çember ve Daire": "circle", "Olasılık": "probability",
     "Veri Toplama ve Analizi": "graph", "Koordinat Sistemi": "grid", "Geometrik Cisimler": "3d"
 }
@@ -293,7 +293,7 @@ siteler_havuzu = [
         "strategy": "native",
         "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html&searchTerm={query}",
         "default_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&type=html",
-        "kategoriler["Akademik Modelleme", "Açık Simülasyon"]
+        "kategoriler": ["Akademik Modelleme", "Açık Simülasyon"],
         "kaynak": "Colorado University"
     }
 ]
@@ -390,4 +390,4 @@ st.sidebar.caption("Sistem üzerindeki tüm yönlendirmeler, kurumsal veri optim
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 13px; letter-spacing: 0.5px;'>Ortak Payda Matematik Öğretmenleri için özel olarak geliştirildi. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 13px; letter-spacing: 0.5px;'>Ortak Payda Matematik Öğretmenleri Kurumsal Dijital Ekosistemi. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
