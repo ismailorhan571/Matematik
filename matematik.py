@@ -281,4 +281,54 @@ with tab2:
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 13px;'>Matematik Öğretmenleri Paylaşım Platformu için geliştirilmiştir. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 13px;'>Ortak Payda Matematik Öğrermenleri için geliştirilmiştir. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
+
+
+
+# =========================
+# PROFESYONEL V3 MODÜLÜ
+# =========================
+import requests
+import sqlite3
+
+if "favoriler" not in st.session_state:
+    st.session_state.favoriler = []
+
+@st.cache_data(ttl=86400)
+def link_kontrol(url):
+    try:
+        r = requests.head(url, allow_redirects=True, timeout=5)
+        return r.status_code < 400
+    except:
+        return False
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("🚀 Profesyonel Araçlar")
+
+kategori_sec = st.sidebar.multiselect(
+    "Kategori",
+    ["Oyun","Simülasyon","Video","Manipülatif","Etkinlik"]
+)
+
+lgs_modu = st.sidebar.toggle("🎯 LGS Modu")
+
+kazanim_arama = st.sidebar.text_input(
+    "📚 Kazanım Arama"
+)
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("⭐ Favoriler")
+
+for fav in st.session_state.favoriler:
+    st.sidebar.write("⭐", fav)
+
+st.markdown('''
+<style>
+.stMetric{
+background:white;
+padding:12px;
+border-radius:14px;
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+</style>
+''', unsafe_allow_html=True)
