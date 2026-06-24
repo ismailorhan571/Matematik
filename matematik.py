@@ -127,11 +127,11 @@ st.markdown("""
 if "favoriler" not in st.session_state:
     st.session_state.favoriler = []
 
-# --- BAŞLIK ALANI ---
+# --- BAŞLIK ALANI (HEADER) ---
 st.markdown("<h1 style='color: #0f172a; font-weight: 800; font-size: 40px; letter-spacing: -1px; margin-bottom:4px;'>📐 Ortaokul Matematik Dijital Entegrasyon Paneli</h1>", unsafe_allow_html=True)
 st.markdown("<p style='color: #475569; font-size: 16px; margin-top:0px;'>Müfredat kazanımları ile tam senkronize çalışan, çok dilli arama optimizasyonlu kurumsal yönetim platformu.</p>", unsafe_allow_html=True)
 
-# --- SIDEBAR ---
+# --- SIDEBAR CONTROL PANEL ---
 st.sidebar.markdown("<h2 style='color: #0f172a; font-size: 22px; font-weight: 700; margin-bottom: 15px;'>🎛️ Parametre İstasyonu</h2>", unsafe_allow_html=True)
 
 sinif_secenekleri = ["Hepsi", "5. Sınıf", "6. Sınıf", "7. Sınıf", "8. Sınıf"]
@@ -154,25 +154,35 @@ if st.sidebar.button("7. Sınıf Denklem"):
     secilen_sinif = "7. Sınıf"
     secilen_konu = "Eşitlik ve Denklem"
 
-# --- GENİŞ SİTE HAVUZU ---
+# --- GENİŞ SİTE HAVUZU (Liveworksheets ve Sinan Sarıtaş düzeltildi) ---
 siteler_havuzu = [
-    {"isim": "EBA", "aciklama": "Milli Eğitim Bakanlığı resmi video ve interaktif içerikler", "strategy": "native", "search_url": "https://www.eba.gov.tr/arama?q={query}", "kategori": "video", "kaynak": "MEB"},
-    {"isim": "Khan Academy Türkçe", "aciklama": "Kaliteli video dersler ve alıştırmalar", "strategy": "native", "search_url": "https://tr.khanacademy.org/search?query={query}", "kategori": "video", "kaynak": "Khan"},
-    {"isim": "Wordwall", "aciklama": "Binlerce interaktif oyun ve öğretmen yapımı etkinlik", "strategy": "native", "search_url": "https://wordwall.net/tr/community?query={query}", "kategori": "game", "kaynak": "Wordwall"},
-    {"isim": "GeoGebra", "aciklama": "Dinamik geometri simülasyonları", "strategy": "native", "search_url": "https://www.geogebra.org/search/{query}", "kategori": "interaktif", "kaynak": "GeoGebra"},
-    {"isim": "Kerim Hoca", "aciklama": "LGS video anlatım ve test çözümleri", "strategy": "native", "search_url": "https://kerimhoca.com/?s={query}", "kategori": "video", "kaynak": "Kerim Hoca"},
-    {"isim": "Sinan Sarıtaş", "aciklama": "Eğlenceli oyunlar, PDF ve etkinlikler", "strategy": "google_search", "target_string": "site:sinansaritas.com {query}", "kategori": "game", "kaynak": "Sinan Sarıtaş"},
-    {"isim": "Matematik.biz", "aciklama": "Konu anlatımı, test ve PDF", "strategy": "google_search", "target_string": "site:matematik.biz {query}", "kategori": "pdf", "kaynak": "Matematik.biz"},
-    {"isim": "Liveworksheets", "aciklama": "Etkileşimli çalışma yaprakları", "strategy": "google_search", "target_string": "site:liveworksheets.com {query} matematik", "kategori": "interaktif", "kaynak": "Global"},
-    {"isim": "Matific", "aciklama": "Oyunlaştırılmış matematik platformu", "strategy": "google_search", "target_string": "matific {query} türkiye", "kategori": "game", "kaynak": "Matific"},
-    {"isim": "PhET", "aciklama": "İleri seviye interaktif simülasyonlar", "strategy": "native", "search_url": "https://phet.colorado.edu/tr/simulations?search={query}", "kategori": "interaktif", "kaynak": "PhET"},
-    {"isim": "Toy Theater", "aciklama": "Eğlenceli matematik oyunları ve manipülatifler", "strategy": "native", "search_url": "https://toytheater.com/category/math-games/", "kategori": "game", "kaynak": "Toy Theater"},
-    {"isim": "Sorubak", "aciklama": "Soru bankası ve tarama testleri", "strategy": "google_search", "target_string": "site:sorubak.com {query}", "kategori": "pdf", "kaynak": "Sorubak"},
-    {"isim": "Math Playground", "aciklama": "Kaliteli matematik oyunları", "strategy": "native", "search_url": "https://www.mathplayground.com/", "kategori": "game", "kaynak": "Math Playground"},
-    {"isim": "Coolmath Games", "aciklama": "Eğitici matematik oyunları", "strategy": "native", "search_url": "https://www.coolmathgames.com/", "kategori": "game", "kaynak": "Coolmath"},
+    {"isim": "EBA", "aciklama": "Milli Eğitim Bakanlığı resmi video, interaktif ve akıllı tahta içerikleri", "strategy": "native",
+     "search_url": "https://www.eba.gov.tr/arama?q={query}", "kategori": "video", "kaynak": "MEB"},
+    {"isim": "Khan Academy Türkçe", "aciklama": "Ücretsiz yüksek kaliteli video dersler ve alıştırmalar", "strategy": "native",
+     "search_url": "https://tr.khanacademy.org/search?query={query}", "kategori": "video", "kaynak": "Khan"},
+    {"isim": "Wordwall Topluluk", "aciklama": "Binlerce öğretmen yapımı interaktif oyun ve yarışma", "strategy": "native",
+     "search_url": "https://wordwall.net/tr/community?query={query}", "kategori": "game", "kaynak": "Wordwall"},
+    {"isim": "GeoGebra", "aciklama": "Dinamik geometri simülasyonları ve interaktif modelleme", "strategy": "native",
+     "search_url": "https://www.geogebra.org/search/{query}", "kategori": "interaktif", "kaynak": "GeoGebra"},
+    {"isim": "Kerim Hoca", "aciklama": "LGS odaklı video anlatım ve test çözümleri", "strategy": "native",
+     "search_url": "https://kerimhoca.com/?s={query}", "kategori": "video", "kaynak": "Kerim Hoca"},
+    {"isim": "Sinan Sarıtaş", "aciklama": "Eğlenceli oyunlar, PDF çalışma kağıtları ve etkinlikler (Ana sayfada ara)", "strategy": "native",
+     "search_url": "https://sinansaritas.com/", "kategori": "game", "kaynak": "Sinan Sarıtaş"},
+    {"isim": "Matematik.biz", "aciklama": "Konu anlatımı, kazanım testleri ve PDF dökümanlar", "strategy": "google_search",
+     "target_string": "site:matematik.biz {query}", "kategori": "pdf", "kaynak": "Matematik.biz"},
+    {"isim": "Liveworksheets", "aciklama": "Etkileşimli çalışma yaprakları (Ana sayfada Türkçe arama yap)", "strategy": "native",
+     "search_url": "https://www.liveworksheets.com/", "kategori": "interaktif", "kaynak": "Global"},
+    {"isim": "Matific", "aciklama": "Oyunlaştırılmış matematik öğrenme platformu", "strategy": "google_search",
+     "target_string": "matific {query} türkiye", "kategori": "game", "kaynak": "Matific"},
+    {"isim": "PhET Simülasyon", "aciklama": "Üniversite düzeyinde interaktif simülasyonlar", "strategy": "native",
+     "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&search={query}", "kategori": "interaktif", "kaynak": "PhET"},
+    {"isim": "Toy Theater", "aciklama": "Eğlenceli matematik oyunları ve manipülatifler", "strategy": "native",
+     "search_url": "https://toytheater.com/category/math-games/", "kategori": "game", "kaynak": "Toy Theater"},
+    {"isim": "Sorubak", "aciklama": "Soru bankası, tarama testi ve deneme sınavları", "strategy": "google_search",
+     "target_string": "site:sorubak.com {query}", "kategori": "pdf", "kaynak": "Sorubak"},
 ]
 
-# --- SORG U ---
+# --- AKILLI SORGUBULDER ---
 terimler = []
 if secilen_sinif != "Hepsi": terimler.append(secilen_sinif)
 if secilen_konu != "Hepsi": terimler.append(secilen_konu)
@@ -189,19 +199,19 @@ for site in siteler_havuzu:
         try:
             if site["strategy"] == "native":
                 encoded = urllib.parse.quote(global_mufredat_string)
-                link = site["search_url"].format(query=encoded)
+                link = site["search_url"].format(query=encoded) if "{query}" in site.get("search_url", "") else site["search_url"]
             else:
                 ham_sorgu = site["target_string"].format(query=global_mufredat_string)
                 encoded = urllib.parse.quote(ham_sorgu)
                 link = f"https://www.google.com/search?q={encoded}"
         except:
-            link = "#"
+            link = site.get("search_url", "#")
     else:
-        link = site.get("search_url", "#")
+        link = site.get("search_url", "#").replace("{query}", "matematik")
     filtrelenmis_siteler.append({"veri": site, "url": link})
 
-# --- TABS (Yeni Oyunlar Sekmesi Eklendi) ---
-tab1, tab2, tab3, tab4 = st.tabs(["🚀 Aktif Eğitim Kanalları Matrisi", "🎮 Sadece Oyunlar", "❤️ Favorilerim", "📊 Kurumsal Entegrasyon Şeması"])
+# --- SEKMELİ ULTRA MODERN GÖRÜNÜM ---
+tab1, tab2, tab3 = st.tabs(["🚀 Aktif Eğitim Kanalları Matrisi", "❤️ Favorilerim", "📊 Kurumsal Entegrasyon Şeması"])
 
 with tab1:
     c_1, c_2, c_3 = st.columns(3)
@@ -249,45 +259,7 @@ with tab1:
                     else:
                         st.info("Zaten favorilerde")
 
-with tab2:  # 🎮 Sadece Oyunlar Sekmesi
-    st.subheader("🎮 Sadece Oyunlar ve Etkileşimli Materyaller")
-    oyunlar = [item for item in filtrelenmis_siteler if item["veri"].get("kategori") == "game"]
-    
-    if not oyunlar:
-        st.info("Bu filtrede oyun bulunamadı. Farklı bir konu seçmeyi deneyin.")
-    else:
-        col_left, col_right = st.columns(2)
-        for index, item in enumerate(oyunlar):
-            data = item["veri"]
-            target_link = item["url"]
-            current_col = col_left if index % 2 == 0 else col_right
-            
-            with current_col:
-                st.markdown(f"""
-                <div class="premium-card">
-                    <span class="status-indicator">🎮 OYUN</span>
-                    <div class="card-title">{data['isim']}</div>
-                    <div class="card-desc">{data['aciklama']}</div>
-                    <div>
-                        <span class="badge badge-sinif">📍 {secilen_sinif}</span>
-                        <span class="badge badge-konu">📖 {secilen_konu}</span>
-                        <span class="badge badge-game">GAME</span>
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                b1, b2 = st.columns([4,1])
-                with b1:
-                    st.link_button(f"🎯 {data['isim']} Oyunlarına Gir", target_link, use_container_width=True)
-                with b2:
-                    if st.button("❤️", key=f"oyun_fav_{index}"):
-                        if not any(f["veri"]["isim"] == data["isim"] for f in st.session_state.favoriler):
-                            st.session_state.favoriler.append(item)
-                            st.success("❤️ Favorilere eklendi!")
-                        else:
-                            st.info("Zaten favorilerde")
-
-with tab3:
+with tab2:
     st.subheader("❤️ Favorilerim")
     if st.session_state.favoriler:
         for fav in st.session_state.favoriler:
@@ -296,9 +268,9 @@ with tab3:
             st.session_state.favoriler = []
             st.rerun()
     else:
-        st.info("Favori eklemek için ❤️ butonuna tıklayın.")
+        st.info("Favori eklemek için kartlardaki ❤️ butonuna tıklayın.")
 
-with tab4:
+with tab3:
     st.markdown("""
     | Entegrasyon Modeli | Operasyonel Süreç | Veri Akış Metodu |
     | :--- | :--- | :--- |
@@ -307,10 +279,11 @@ with tab4:
     | **Anlık Entegrasyon** | Açık veritabanı sunan platformlarda doğrudan eş zamanlı filtreleme gerçekleştirir. | Native Query Parametre Enjeksiyonu |
     """)
 
-# --- SIDEBAR ve FOOTER ---
+# --- SIDEBAR ALT NOT ---
 st.sidebar.markdown("---")
 st.sidebar.markdown("<h4 style='color: #0f172a; font-weight:600;'>📌 Operasyonel Bilgi</h4>", unsafe_allow_html=True)
 st.sidebar.caption("Sistem üzerindeki tüm yönlendirmeler, kurumsal veri optimizasyonu protokollerine uygun olarak dinamik biçimde güncellenmektedir.")
 
+# --- FOOTER ---
 st.markdown("---")
 st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 13px; letter-spacing: 0.5px;'>Ortak Payda Matematik Öğretmenleri Kurumsal Dijital Ekosistemi. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
