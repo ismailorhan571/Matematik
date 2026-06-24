@@ -14,16 +14,19 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
     
+    /* Global Alan Düzenlemesi */
     html, body, [data-testid="stAppViewContainer"] {
         background-color: #f8fafc;
         font-family: 'Outfit', sans-serif;
     }
     
+    /* Yan Menü Premium Revizyonu */
     [data-testid="stSidebar"] {
         background-color: #ffffff !important;
         border-right: 1px solid #e2e8f0;
     }
     
+    /* Üst Sekme Çubuğu Modernizasyonu */
     .stTabs [data-baseweb="tab-list"] {
         gap: 16px;
         border-bottom: 2px solid #e2e8f0;
@@ -45,6 +48,7 @@ st.markdown("""
         box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
     }
 
+    /* ULTRA MODERN GLOW-CARD MİMARİSİ */
     .premium-card {
         background: #ffffff;
         border-radius: 28px;
@@ -56,11 +60,13 @@ st.markdown("""
         position: relative;
         overflow: hidden;
     }
+    
     .premium-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
         border-color: #4f46e5;
     }
+    
     .premium-card::before {
         content: '';
         position: absolute;
@@ -82,6 +88,7 @@ st.markdown("""
         margin-bottom: 24px;
     }
 
+    /* Kapsül Rozetler */
     .badge {
         display: inline-flex;
         align-items: center;
@@ -98,6 +105,7 @@ st.markdown("""
     .badge-video { background-color: #fef3c7; color: #b45309; }
     .badge-game { background-color: #ecfdf5; color: #065f46; }
     .badge-interaktif { background-color: #f3e8ff; color: #6d28d9; }
+    .badge-origin { background-color: #fef3c7; color: #b45309; }
     
     .status-indicator {
         float: right;
@@ -126,20 +134,21 @@ st.markdown("""
 if "favoriler" not in st.session_state:
     st.session_state.favoriler = []
 
-# --- BAŞLIK ALANI ---
+# --- BAŞLIK ALANI (HEADER) ---
 st.markdown("<h1 style='color: #0f172a; font-weight: 800; font-size: 40px; letter-spacing: -1px; margin-bottom:4px;'>📐 Ortaokul Matematik Dijital Entegrasyon Paneli</h1>", unsafe_allow_html=True)
 st.markdown("<p style='color: #475569; font-size: 16px; margin-top:0px;'>Müfredat kazanımları ile tam senkronize çalışan, çok dilli arama optimizasyonlu kurumsal yönetim platformu.</p>", unsafe_allow_html=True)
 
-# --- SIDEBAR ---
+# --- SIDEBAR CONTROL PANEL ---
 st.sidebar.markdown("<h2 style='color: #0f172a; font-size: 22px; font-weight: 700; margin-bottom: 15px;'>🎛️ Parametre İstasyonu</h2>", unsafe_allow_html=True)
 
 sinif_secenekleri = ["Hepsi", "5. Sınıf", "6. Sınıf", "7. Sınıf", "8. Sınıf"]
 secilen_sinif = st.sidebar.selectbox("Eğitim Kademesi:", sinif_secenekleri)
 
-konu_secenekleri = ["Hepsi", "Doğal Sayılar", "Doğal Sayılarla İşlemler", "Kesirler", "Kesirlerle İşlemler", 
-                    "Ondalık Gösterim", "Yüzdeler", "Oran ve Orantı", "Cebirsel İfadeler", "Eşitlik ve Denklem", 
-                    "Üslü İfadeler", "Kareköklü İfadeler", "Geometri", "Üçgenler", "Çember ve Daire", 
-                    "Veri Toplama ve Analizi", "Olasılık", "Koordinat Sistemi"]
+konu_secenekleri = ["Hepsi", "Doğal Sayılar", "Doğal Sayılarla İşlemler", "Çarpanlar ve Katlar", "Kümeler", "Tam Sayılar",
+                    "Kesirler", "Kesirlerle İşlemler", "Ondalık Gösterim", "Rasyonel Sayılar", "Üslü İfadeler", "Kareköklü İfadeler",
+                    "Oran ve Orantı", "Yüzdeler", "Cebirsel İfadeler", "Eşitlik ve Denklem", "Doğrusal Denklemler", "Eşitsizlikler",
+                    "Temel Geometrik Kavramlar", "Doğrular ve Açılar", "Çokgenler", "Üçgenler", "Çember ve Daire", "Eşlik ve Benzerlik",
+                    "Dönüşüm Geometrisi", "Geometrik Cisimler", "Veri Toplama ve Analizi", "Olasılık", "Koordinat Sistemi"]
 
 secilen_konu = st.sidebar.selectbox("Müfredat Ünitesi:", konu_secenekleri)
 ozel_kazanim_sorgu = st.sidebar.text_input("🔍 Odaklanılacak Kazanım Terimi:", placeholder="Örn: M.8.1.2.1 veya Özdeşlikler...").strip()
@@ -151,49 +160,50 @@ if st.sidebar.button("8. Sınıf Üslü İfadeler"):
 if st.sidebar.button("7. Sınıf Denklem"):
     secilen_sinif = "7. Sınıf"
     secilen_konu = "Eşitlik ve Denklem"
+if st.sidebar.button("6. Sınıf Oran Orantı"):
+    secilen_sinif = "6. Sınıf"
+    secilen_konu = "Oran ve Orantı"
 
-# --- İNGİLİZCE ÇEVİRİ HARİTASI (Sorunlu siteler için) ---
-ingilizce_harita = {
-    "Üçgenler": "triangles",
-    "Üslü İfadeler": "exponents",
-    "Geometri": "geometry",
-    "Çember ve Daire": "circle",
-    "Olasılık": "probability",
-    "Oran ve Orantı": "ratio proportion",
-    "Kesirler": "fractions"
-}
-
-# --- GENİŞLETİLMİŞ SİTE HAVUZU ---
+# --- ÇOK GENİŞLETİLMİŞ SİTE HAVUZU (Özel ders ve okul için en iyi kaynaklar) ---
 siteler_havuzu = [
-    {"isim": "EBA", "aciklama": "Resmi MEB video ve interaktif içerikler", "strategy": "native",
-     "search_url": "https://www.eba.gov.tr/arama?q={query}", "kategori": "video", "kaynak": "MEB"},
-    {"isim": "Khan Academy Türkçe", "aciklama": "Kaliteli video dersler ve alıştırmalar", "strategy": "native",
-     "search_url": "https://tr.khanacademy.org/search?query={query}", "kategori": "video", "kaynak": "Khan"},
-    {"isim": "Wordwall", "aciklama": "İnteraktif oyun ve etkinlikler", "strategy": "native",
-     "search_url": "https://wordwall.net/tr/community?query={query}", "kategori": "game", "kaynak": "Wordwall"},
-    {"isim": "GeoGebra", "aciklama": "Dinamik geometri simülasyonları", "strategy": "native",
+    {"isim": "EBA", "aciklama": "Milli Eğitim Bakanlığı resmi video ders anlatımları, interaktif içerikler ve akıllı tahta materyalleri. En güvenilir resmi kaynak.", "strategy": "native",
+     "search_url": "https://www.eba.gov.tr/arama?q={query}", "kategori": "video", "kaynak": "MEB Resmi"},
+    
+    {"isim": "Khan Academy Türkçe", "aciklama": "Dünya standartlarında video dersler, alıştırma soruları ve ilerleme takibi. Özel ders için çok ideal.", "strategy": "native",
+     "search_url": "https://tr.khanacademy.org/search?query={query}", "kategori": "video", "kaynak": "Khan Academy"},
+    
+    {"isim": "Wordwall Topluluk", "aciklama": "Öğretmenler tarafından hazırlanmış binlerce interaktif oyun, yarışma ve etkinlik. Öğrenciler bayılıyor.", "strategy": "native",
+     "search_url": "https://wordwall.net/tr/community?query={query}", "kategori": "game", "kaynak": "Global Topluluk"},
+    
+    {"isim": "GeoGebra", "aciklama": "Dinamik geometri simülasyonları, grafik çizimi ve interaktif modelleme. Geometri konuları için vazgeçilmez.", "strategy": "native",
      "search_url": "https://www.geogebra.org/search/{query}", "kategori": "interaktif", "kaynak": "GeoGebra"},
-    {"isim": "Kerim Hoca", "aciklama": "LGS video ve test çözümleri", "strategy": "native",
+    
+    {"isim": "Kerim Hoca", "aciklama": "LGS seviyesinde kaliteli video anlatımlar, test çözümleri ve konu özetleri.", "strategy": "native",
      "search_url": "https://kerimhoca.com/?s={query}", "kategori": "video", "kaynak": "Kerim Hoca"},
-    {"isim": "Liveworksheets", "aciklama": "Etkileşimli çalışma yaprakları", "strategy": "google_search",
+    
+    {"isim": "Sinan Sarıtaş", "aciklama": "Eğlenceli oyunlar, PDF çalışma kağıtları, etkinlikler ve interaktif materyaller.", "strategy": "google_search",
+     "target_string": "site:sinansaritas.com {query}", "kategori": "game", "kaynak": "Sinan Sarıtaş"},
+    
+    {"isim": "Matematik.biz", "aciklama": "Konu anlatımları, kazanım testleri, çalışma yaprakları ve PDF dökümanlar.", "strategy": "google_search",
+     "target_string": "site:matematik.biz {query}", "kategori": "pdf", "kaynak": "Matematik.biz"},
+    
+    {"isim": "Liveworksheets", "aciklama": "Dünya çapında etkileşimli çalışma yaprakları. Öğrenciler anında dönüt alır.", "strategy": "google_search",
      "target_string": "site:liveworksheets.com {query} matematik", "kategori": "interaktif", "kaynak": "Global"},
-    {"isim": "Matematik Vakti", "aciklama": "PDF test ve çalışma kağıtları", "strategy": "google_search",
-     "target_string": "site:matematikvakti.net {query}", "kategori": "pdf", "kaynak": "Matematik Vakti"},
-    {"isim": "Sorubak", "aciklama": "Soru bankası ve tarama testleri", "strategy": "google_search",
-     "target_string": "site:sorubak.com {query}", "kategori": "pdf", "kaynak": "Sorubak"},
-    {"isim": "Matific", "aciklama": "Oyunlaştırılmış matematik", "strategy": "google_search",
+    
+    {"isim": "Matific Türkiye", "aciklama": "Oyunlaştırılmış, pedagojik matematik öğrenme platformu. Bireysel takip çok güçlü.", "strategy": "google_search",
      "target_string": "matific {query} türkiye", "kategori": "game", "kaynak": "Matific"},
     
-    # Sorunlu siteler için özel düzenleme
-    {"isim": "Toy Theater", "aciklama": "Eğlenceli matematik oyunları (Ana sayfada ara)", "strategy": "native",
+    {"isim": "PhET Simülasyon", "aciklama": "Üniversite düzeyinde interaktif simülasyonlar. Kavramları somutlaştırmak için mükemmel.", "strategy": "native",
+     "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&search={query}", "kategori": "interaktif", "kaynak": "PhET"},
+    
+    {"isim": "Toy Theater", "aciklama": "Eğlenceli matematik oyunları ve sanal manipülatifler.", "strategy": "native",
      "search_url": "https://toytheater.com/category/math-games/", "kategori": "game", "kaynak": "Toy Theater"},
-    {"isim": "Math Playground", "aciklama": "Kaliteli matematik oyunları (Ana sayfada ara)", "strategy": "native",
-     "search_url": "https://www.mathplayground.com/", "kategori": "game", "kaynak": "Math Playground"},
-    {"isim": "Coolmath Games", "aciklama": "Eğitici matematik oyunları (Ana sayfada ara)", "strategy": "native",
-     "search_url": "https://www.coolmathgames.com/", "kategori": "game", "kaynak": "Coolmath"},
+    
+    {"isim": "Sorubak", "aciklama": "Zengin soru bankası, tarama testleri ve LGS hazırlık materyalleri.", "strategy": "google_search",
+     "target_string": "site:sorubak.com {query}", "kategori": "pdf", "kaynak": "Sorubak"},
 ]
 
-# --- SORG U OLUŞTURMA ---
+# --- AKILLI SORGUBULDER ---
 terimler = []
 if secilen_sinif != "Hepsi": terimler.append(secilen_sinif)
 if secilen_konu != "Hepsi": terimler.append(secilen_konu)
@@ -203,25 +213,25 @@ if ozel_kazanim_sorgu and "M." in ozel_kazanim_sorgu.upper():
 
 global_mufredat_string = " ".join(terimler).strip()
 
-# --- LİNK OLUŞTURMA (Düzeltilmiş) ---
+# --- LİNK OLUŞTURMA VE SÜZGEÇ ALGORİTMASI ---
 filtrelenmis_siteler = []
 for site in siteler_havuzu:
     if global_mufredat_string:
         try:
             if site["strategy"] == "native":
                 encoded = urllib.parse.quote(global_mufredat_string)
-                link = site["search_url"].format(query=encoded) if "{query}" in site.get("search_url", "") else site["search_url"]
+                link = site["search_url"].format(query=encoded)
             else:
-                ham = site["target_string"].format(query=global_mufredat_string)
-                encoded = urllib.parse.quote(ham)
+                ham_sorgu = site["target_string"].format(query=global_mufredat_string)
+                encoded = urllib.parse.quote(ham_sorgu)
                 link = f"https://www.google.com/search?q={encoded}"
         except:
             link = site.get("search_url", "#")
     else:
-        link = site.get("search_url", "#")
+        link = site.get("search_url", "#").replace("{query}", "matematik")
     filtrelenmis_siteler.append({"veri": site, "url": link})
 
-# --- TABS ve KARTLAR (Orijinal uzun tasarım) ---
+# --- SEKMELİ ULTRA MODERN GÖRÜNÜM PANAROMASI ---
 tab1, tab2, tab3 = st.tabs(["🚀 Aktif Eğitim Kanalları Matrisi", "❤️ Favorilerim", "📊 Kurumsal Entegrasyon Şeması"])
 
 with tab1:
@@ -236,7 +246,7 @@ with tab1:
     if st.button("📋 Tüm Linkleri Kopyala", type="primary", use_container_width=True):
         link_list = "\n\n".join([f"{item['veri']['isim']}:\n{item['url']}" for item in filtrelenmis_siteler])
         st.code(link_list)
-        st.success("Tüm linkler kopyalandı!")
+        st.success("✅ Tüm linkler kopyalandı!")
 
     col_left, col_right = st.columns(2)
     for index, item in enumerate(filtrelenmis_siteler):
@@ -255,6 +265,7 @@ with tab1:
                     <span class="badge badge-sinif">📍 {secilen_sinif if secilen_sinif != 'Hepsi' else 'Tüm Kademeler'}</span>
                     <span class="badge badge-konu">📖 {secilen_konu if secilen_konu != 'Hepsi' else 'Genel Müfredat'}</span>
                     <span class="badge {badge_class}">{data.get('kategori','').upper()}</span>
+                    <span class="badge badge-origin">🏢 {data.get('kaynak','')}</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -279,11 +290,22 @@ with tab2:
             st.session_state.favoriler = []
             st.rerun()
     else:
-        st.info("Favori eklemek için ❤️ butonuna tıklayın.")
+        st.info("Favori eklemek için kartlardaki ❤️ butonuna tıklayın.")
 
 with tab3:
-    st.markdown("**Ortak Payda Matematik Öğretmenleri** için özel olarak geliştirilmiştir.")
+    st.markdown("""
+    | Entegrasyon Modeli | Operasyonel Süreç | Veri Akış Metodu |
+    | :--- | :--- | :--- |
+    | **Çok Dilli Veri Optimizasyonu** | Küresel altyapıya sahip harici platformlarda kavramsal eşleşme sağlar. | Otomatik Kavramsal Çeviri Katmanı |
+    | **Dinamik URL Yapılandırması** | İç arama yapısı kapalı devre olan sistemlerde doğrudan ilgili hedef dizine odaklanır. | Eş Zamanlı Google İndeks Yönlendirmesi |
+    | **Anlık Entegrasyon** | Açık veritabanı sunan platformlarda doğrudan eş zamanlı filtreleme gerçekleştirir. | Native Query Parametre Enjeksiyonu |
+    """)
 
-st.sidebar.caption("Tüm yönlendirmeler dinamik olarak güncellenir.")
+# --- SIDEBAR ALT NOT ---
+st.sidebar.markdown("---")
+st.sidebar.markdown("<h4 style='color: #0f172a; font-weight:600;'>📌 Operasyonel Bilgi</h4>", unsafe_allow_html=True)
+st.sidebar.caption("Sistem üzerindeki tüm yönlendirmeler, kurumsal veri optimizasyonu protokollerine uygun olarak dinamik biçimde güncellenmektedir.")
+
+# --- FOOTER ---
 st.markdown("---")
 st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 13px; letter-spacing: 0.5px;'>Ortak Payda Matematik Öğretmenleri Kurumsal Dijital Ekosistemi. İSMAİL ORHAN © 2026</p>", unsafe_allow_html=True)
