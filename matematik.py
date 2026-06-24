@@ -127,11 +127,11 @@ st.markdown("""
 if "favoriler" not in st.session_state:
     st.session_state.favoriler = []
 
-# --- BAŞLIK ALANI (HEADER) ---
+# --- BAŞLIK ALANI ---
 st.markdown("<h1 style='color: #0f172a; font-weight: 800; font-size: 40px; letter-spacing: -1px; margin-bottom:4px;'>📐 Ortaokul Matematik Dijital Entegrasyon Paneli</h1>", unsafe_allow_html=True)
 st.markdown("<p style='color: #475569; font-size: 16px; margin-top:0px;'>Müfredat kazanımları ile tam senkronize çalışan, çok dilli arama optimizasyonlu kurumsal yönetim platformu.</p>", unsafe_allow_html=True)
 
-# --- SIDEBAR CONTROL PANEL ---
+# --- SIDEBAR ---
 st.sidebar.markdown("<h2 style='color: #0f172a; font-size: 22px; font-weight: 700; margin-bottom: 15px;'>🎛️ Parametre İstasyonu</h2>", unsafe_allow_html=True)
 
 sinif_secenekleri = ["Hepsi", "5. Sınıf", "6. Sınıf", "7. Sınıf", "8. Sınıf"]
@@ -154,32 +154,25 @@ if st.sidebar.button("7. Sınıf Denklem"):
     secilen_sinif = "7. Sınıf"
     secilen_konu = "Eşitlik ve Denklem"
 
-# --- GENİŞ SİTE HAVUZU (Liveworksheets ve Sinan Sarıtaş düzeltildi) ---
+# --- GENİŞLETİLMİŞ SİTE HAVUZU (22+ Kaynak) ---
 siteler_havuzu = [
-    {"isim": "EBA", "aciklama": "Milli Eğitim Bakanlığı resmi video, interaktif ve akıllı tahta içerikleri", "strategy": "native",
-     "search_url": "https://www.eba.gov.tr/arama?q={query}", "kategori": "video", "kaynak": "MEB"},
-    {"isim": "Khan Academy Türkçe", "aciklama": "Ücretsiz yüksek kaliteli video dersler ve alıştırmalar", "strategy": "native",
-     "search_url": "https://tr.khanacademy.org/search?query={query}", "kategori": "video", "kaynak": "Khan"},
-    {"isim": "Wordwall Topluluk", "aciklama": "Binlerce öğretmen yapımı interaktif oyun ve yarışma", "strategy": "native",
-     "search_url": "https://wordwall.net/tr/community?query={query}", "kategori": "game", "kaynak": "Wordwall"},
-    {"isim": "GeoGebra", "aciklama": "Dinamik geometri simülasyonları ve interaktif modelleme", "strategy": "native",
-     "search_url": "https://www.geogebra.org/search/{query}", "kategori": "interaktif", "kaynak": "GeoGebra"},
-    {"isim": "Kerim Hoca", "aciklama": "LGS odaklı video anlatım ve test çözümleri", "strategy": "native",
-     "search_url": "https://kerimhoca.com/?s={query}", "kategori": "video", "kaynak": "Kerim Hoca"},
-    {"isim": "Sinan Sarıtaş", "aciklama": "Eğlenceli oyunlar, PDF çalışma kağıtları ve etkinlikler (Ana sayfada ara)", "strategy": "native",
-     "search_url": "https://sinansaritas.com/", "kategori": "game", "kaynak": "Sinan Sarıtaş"},
-    {"isim": "Matematik.biz", "aciklama": "Konu anlatımı, kazanım testleri ve PDF dökümanlar", "strategy": "google_search",
-     "target_string": "site:matematik.biz {query}", "kategori": "pdf", "kaynak": "Matematik.biz"},
-    {"isim": "Liveworksheets", "aciklama": "Etkileşimli çalışma yaprakları (Ana sayfada Türkçe arama yap)", "strategy": "native",
-     "search_url": "https://www.liveworksheets.com/", "kategori": "interaktif", "kaynak": "Global"},
-    {"isim": "Matific", "aciklama": "Oyunlaştırılmış matematik öğrenme platformu", "strategy": "google_search",
-     "target_string": "matific {query} türkiye", "kategori": "game", "kaynak": "Matific"},
-    {"isim": "PhET Simülasyon", "aciklama": "Üniversite düzeyinde interaktif simülasyonlar", "strategy": "native",
-     "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&search={query}", "kategori": "interaktif", "kaynak": "PhET"},
-    {"isim": "Toy Theater", "aciklama": "Eğlenceli matematik oyunları ve manipülatifler", "strategy": "native",
-     "search_url": "https://toytheater.com/category/math-games/", "kategori": "game", "kaynak": "Toy Theater"},
-    {"isim": "Sorubak", "aciklama": "Soru bankası, tarama testi ve deneme sınavları", "strategy": "google_search",
-     "target_string": "site:sorubak.com {query}", "kategori": "pdf", "kaynak": "Sorubak"},
+    {"isim": "EBA", "aciklama": "Milli Eğitim Bakanlığı resmi video, interaktif ve akıllı tahta içerikleri", "strategy": "native", "search_url": "https://www.eba.gov.tr/arama?q={query}", "kategori": "video", "kaynak": "MEB"},
+    {"isim": "Khan Academy Türkçe", "aciklama": "Ücretsiz yüksek kaliteli video dersler ve alıştırmalar", "strategy": "native", "search_url": "https://tr.khanacademy.org/search?query={query}", "kategori": "video", "kaynak": "Khan"},
+    {"isim": "Wordwall Topluluk", "aciklama": "Binlerce öğretmen yapımı interaktif oyun ve yarışma", "strategy": "native", "search_url": "https://wordwall.net/tr/community?query={query}", "kategori": "game", "kaynak": "Wordwall"},
+    {"isim": "GeoGebra", "aciklama": "Dinamik geometri simülasyonları ve interaktif modelleme", "strategy": "native", "search_url": "https://www.geogebra.org/search/{query}", "kategori": "interaktif", "kaynak": "GeoGebra"},
+    {"isim": "Kerim Hoca", "aciklama": "LGS odaklı video anlatım ve test çözümleri", "strategy": "native", "search_url": "https://kerimhoca.com/?s={query}", "kategori": "video", "kaynak": "Kerim Hoca"},
+    {"isim": "Sinan Sarıtaş", "aciklama": "Eğlenceli oyunlar, PDF çalışma kağıtları ve etkinlikler", "strategy": "google_search", "target_string": "site:sinansaritas.com {query} matematik", "kategori": "game", "kaynak": "Sinan Sarıtaş"},
+    {"isim": "Matematik.biz", "aciklama": "Konu anlatımı, kazanım testleri ve PDF dökümanlar", "strategy": "google_search", "target_string": "site:matematik.biz {query}", "kategori": "pdf", "kaynak": "Matematik.biz"},
+    {"isim": "Liveworksheets", "aciklama": "Etkileşimli çalışma yaprakları", "strategy": "google_search", "target_string": "site:liveworksheets.com {query} matematik", "kategori": "interaktif", "kaynak": "Global"},
+    {"isim": "Matific", "aciklama": "Oyunlaştırılmış matematik öğrenme platformu", "strategy": "google_search", "target_string": "matific {query} türkiye", "kategori": "game", "kaynak": "Matific"},
+    {"isim": "PhET Simülasyon", "aciklama": "Üniversite düzeyinde interaktif simülasyonlar", "strategy": "native", "search_url": "https://phet.colorado.edu/tr/simulations/filter?subjects=math&search={query}", "kategori": "interaktif", "kaynak": "PhET"},
+    {"isim": "Toy Theater", "aciklama": "Eğlenceli matematik oyunları ve manipülatifler", "strategy": "native", "search_url": "https://toytheater.com/category/math-games/", "kategori": "game", "kaynak": "Toy Theater"},
+    {"isim": "Sorubak", "aciklama": "Soru bankası, tarama testi ve deneme sınavları", "strategy": "google_search", "target_string": "site:sorubak.com {query}", "kategori": "pdf", "kaynak": "Sorubak"},
+    {"isim": "Eğitimhane", "aciklama": "Öğretmen paylaşımlı yazılılar ve çalışma föyleri", "strategy": "google_search", "target_string": "site:egitimhane.com {query}", "kategori": "pdf", "kaynak": "Eğitimhane"},
+    {"isim": "Derslig", "aciklama": "İnteraktif ünite görevleri ve ölçme değerlendirme", "strategy": "google_search", "target_string": "site:derslig.com {query}", "kategori": "interaktif", "kaynak": "Derslig"},
+    {"isim": "Math Playground", "aciklama": "Kaliteli matematik oyunları", "strategy": "native", "search_url": "https://www.mathplayground.com/", "kategori": "game", "kaynak": "Math Playground"},
+    {"isim": "Coolmath Games", "aciklama": "Eğitici matematik oyunları", "strategy": "native", "search_url": "https://www.coolmathgames.com/", "kategori": "game", "kaynak": "Coolmath"},
+    {"isim": "Sevimli Matematik", "aciklama": "LGS deneme ve PDF kaynaklar", "strategy": "google_search", "target_string": "site:sevimlimatematik.com {query}", "kategori": "pdf", "kaynak": "Sevimli Matematik"},
 ]
 
 # --- AKILLI SORGUBULDER ---
@@ -199,7 +192,7 @@ for site in siteler_havuzu:
         try:
             if site["strategy"] == "native":
                 encoded = urllib.parse.quote(global_mufredat_string)
-                link = site["search_url"].format(query=encoded) if "{query}" in site.get("search_url", "") else site["search_url"]
+                link = site["search_url"].format(query=encoded)
             else:
                 ham_sorgu = site["target_string"].format(query=global_mufredat_string)
                 encoded = urllib.parse.quote(ham_sorgu)
@@ -210,7 +203,7 @@ for site in siteler_havuzu:
         link = site.get("search_url", "#").replace("{query}", "matematik")
     filtrelenmis_siteler.append({"veri": site, "url": link})
 
-# --- SEKMELİ ULTRA MODERN GÖRÜNÜM ---
+# --- TABS ---
 tab1, tab2, tab3 = st.tabs(["🚀 Aktif Eğitim Kanalları Matrisi", "❤️ Favorilerim", "📊 Kurumsal Entegrasyon Şeması"])
 
 with tab1:
